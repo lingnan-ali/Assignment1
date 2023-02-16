@@ -1,0 +1,378 @@
+<html lang="en">
+<!-- feel free to revise this file -->
+
+<head>
+	<title>Checklist by Ali</title>
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<style>	
+		/* importing my font (Red Hat Display) */
+		@import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Red+Hat+Display:wght@400;700&display=swap');
+
+		:root {
+			/* Variables. Makes it easy for me. */
+			--primary: #417780;
+			--seconday: #7199a2;
+			--red: #8f1635;
+			--black: #333;
+			--grey: #c0b99f;		
+			--toggled-color: #CC5500;
+		}
+
+		body {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			background-color: #f7f4fa;
+		}
+
+		.checklistContainer {
+			background-color: #FFF;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			width: 40vw;
+			margin-top: 5vh;
+			box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+			border-radius: 15px;
+			
+			animation-name: introAnimation;
+			animation-duration: 3s;
+		}
+
+		@keyframes introAnimation {
+			from {margin-right: 150vw;}
+			to {margin-right: 0vw;}
+		}
+
+		.checklistContainer:hover h1 {
+			background-color: var(--primary);
+			text-shadow: none;
+			color: #FFF;
+			border-radius: .2em;
+			padding: .5vh 6.5vw .5vh 1vw;
+			box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+		}
+
+		h1 {
+			font-family: 'Red Hat Display', sans-serif;
+			font-weight: 700;
+			align-self: flex-start;
+			margin: 2vh 1vw;
+			padding: .5vh 0 .5vh 1vw;
+			color: var(--primary);
+			font-size: 3em;
+			text-shadow: -1px -1px 0px #F1F1F1, 3px 3px 0px #F1F1F1, 6px 6px 0px #D1D1D1;
+			transition-duration: .3s;
+		}
+
+		textarea {
+			background-color: #FFF;
+			width:100%;
+			margin: 2vh 0;
+			align-self: center;
+			padding: 1.5vh 2.5vw;
+
+			border-width: 5px 0;
+			border-style: solid;
+			border-radius: 0;
+			border-color: var(--seconday);
+
+			color:var(--seconday);
+			font-family: 'PT Sans', sans-serif;
+			font-weight: 400;
+			font-size: 1.1em;
+			resize: none;
+			overflow: scroll;
+			transition-duration: .3s;
+		}
+
+		textarea:focus{
+			outline: none !important;
+				
+			box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+			scale: 120%;
+		}
+
+		.divButton {
+			margin: 1vh 2.5vw;
+			align-self: flex-end;
+		}
+
+		.divButton > * {
+			border: none;
+			padding: 1vh 0vw;
+			border-radius: .8em;
+			box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
+			background-color: var(--primary);
+			color: #FFF;
+			font-family: 'Red Hat Display', sans-serif;
+			font-weight: 400;
+			font-size: 1em;
+
+			cursor: pointer;
+			width: 5vw;
+
+			transition-duration: .3s;
+		}
+
+		.divButton > button:hover {
+			background-color: #FFF;
+			color: var(--primary);
+			font-weight: 700;
+			box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+		}
+
+		.toggledButton {
+			border: none;
+			padding: 1vh 0vw;
+			border-radius: .8em;
+			box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
+			background-color: var(--toggled-color);
+			color: #FFF;
+			font-family: 'Red Hat Display', sans-serif;
+			font-weight: 400;
+			font-size: 1em;
+
+			cursor: pointer;
+			width: 5vw;
+
+			transition-duration: .3s;
+		}
+
+		#order_list {
+			margin: 5vh 0;
+			max-width: 80vw;
+			align-self: left;
+			font-family: 'Red Hat Display', sans-serif;
+			font-weight: 400;
+			
+			list-style: none;
+			counter-reset: checklist-counter;
+		}
+
+		li {
+			font-size: 30px;
+			counter-increment: checklist-counter;
+			margin: 1.4vw;
+			padding: 1.2vh 1.2vw;
+			background-color: #F5F5F5;
+			border-radius: 25px;
+			margin-right: 5vw;
+			box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
+			display: grid;
+			grid-template-columns: .1fr 1fr;
+			grid-template-rows: 1fr;
+
+			transition-duration: .3s;
+		}
+
+		li::before {
+			content: counter(checklist-counter);
+			background-color: var(--primary);
+			width: 1.5em;
+			height: 1.5em;
+			border-radius: 50%;
+			display: inline-block;
+			line-height: 1.5em;
+			color: #FFF;
+			text-align: center;
+			margin-right: 1.5vw;
+		}
+
+		li:hover {
+			box-shadow: rgba(65, 119, 128, 0.4) 5px 5px, rgba(65, 119, 128, 0.3) 10px 10px, rgba(65, 119, 128, 0.2) 15px 15px, rgba(65, 119, 128, 0.1) 20px 20px, rgba(65, 119, 128, 0.05) 25px 25px;
+			font-weight: 700;
+			cursor: pointer;
+		}
+
+		.completedLi {
+			text-decoration: line-through;
+			background-color: var(--primary);
+			box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+		}
+
+		/* Using display none rather than visibility hidden because visibility hidden
+		   still allocates space. Hope it's alright.
+		*/
+		.hiddenLi {
+			display: none;
+		}
+		
+		/* For smaller screens */
+		@media (max-width: 1200px) {
+			.checklistContainer {
+				width: 50vw;
+			}
+
+			.divButton > * {
+				width: 8vw;
+			}
+		}
+
+	</style>
+</head>
+
+<body>
+	<div class="checklistContainer">
+		<h1>Checklist</h1>
+		<textarea id='text' rows="3" placeholder="e.g. Dinner, 1; Exercise, 2; Study, 3"></textarea> 
+		<br/>
+		<div class='divButton'>
+			<button id='btn_add'>Add</button>
+			<button id='btn_hide'>Toggle</button>
+			<button id='btn_email'>Email</button>
+		</div>
+
+		<ol id='order_list'>
+		</ol>
+	</div>
+</body>
+
+	<script>
+		var documentOrderList = document.getElementById("order_list");
+		documentOrderList.addEventListener('dblclick', function(e){
+			let confirmText = "Are you sure you want to remove \"" + e.target.innerText + "\" from the list?";
+			if (e.target.tagName == "LI") {
+				if(confirm(confirmText)){
+					e.target.remove();
+				}
+			}
+		});
+
+		const btnAdd = document.getElementById("btn_add");
+		btnAdd.addEventListener("click", onBtnAddClick);
+
+		const btnToggle = document.getElementById("btn_hide");
+		var isToggled = false;
+		
+		btnToggle.addEventListener("click", onBtnToggleClick);
+
+		documentOrderList.addEventListener("click", function(e){
+			if (e.target.tagName == "LI") {
+				e.target.classList.toggle("completedLi");
+				if (isToggled == true) {
+					e.target.classList.add("hiddenLi");
+				}
+			}
+		});
+
+		function onBtnAddClick(){
+			let inputText = document.getElementById("text").value;
+			let newTasks = [];
+			
+			readInputText(inputText, newTasks);
+			updateOrderList(newTasks);
+		}
+
+		const btnEmail = document.getElementById("btn_email");
+		btnEmail.addEventListener("click", function(e){
+			let emailAddress = prompt("Please input your email address.");
+
+			if (emailAddress) {
+				let subject = "Emailing my checklist!";
+				let body = "";
+				let taskIndex = 1;
+				
+				documentOrderList.childNodes.forEach(li => {
+					if (li.tagName == "LI") {
+						// I checked RFC2368 that only %0D%0A can do line break with "mailto:"
+						// https://www.rfc-editor.org/rfc/rfc2368#page-3 <-- source in "5. Encoding" section
+						if (li.classList.contains("completedLi")){
+							body = body.concat(taskIndex, ": ", li.innerText, " [COMPLETED]", "%0D%0A");
+						} else {
+							body = body.concat(taskIndex, ": ", li.innerText, "%0D%0A");
+						}
+
+						taskIndex = taskIndex + 1;
+					}
+				});
+				
+				window.open("mailto:" + emailAddress + "?subject=" + subject + "&body=" + body);
+			} else {
+				alert("Sorry, you didn't input an email address.");
+			}
+		});
+
+		function readInputText(inputText, newTasks) {
+			while (inputText.trim().length > 0) {
+				let taskEndIndex = inputText.indexOf(";");
+				
+				// If it's the last task in the inputText, it may not have a ';'.
+				if (taskEndIndex == -1){
+					taskEndIndex = inputText.length;
+				}
+
+				let task = inputText.slice(0, taskEndIndex);
+				inputText = inputText.slice(taskEndIndex + 1);
+
+				let commaIndex = task.indexOf(",");
+				let content = task.slice(0, commaIndex).trim();
+				
+				let category = Number(task.slice(commaIndex + 1).trim());
+				
+				if (category){
+					if (category > 3 || category < 1) {
+						alert("Sorry, the accepted category range is 1-3.");
+					} else {
+						newTasks.push({
+							content: content,
+							category: category
+						});
+
+						// If we are done, we reset the textarea.
+						document.getElementById("text").value = "";
+					}
+				} else {
+					alert("Sorry, your input format is incorrect.\n\ne.g. Dinner, 1; Exercise, 2; Study, 3\nUse comma (,) to seperate task content and task category. If multiple tasks need to be added, please use semicolon (;).");
+				}
+			}
+		}
+
+		function updateOrderList(newTasks){
+			// Add all the new tasks (received from inputText) to the ordered list.
+			for (var i = 0; i < newTasks.length; i++){
+				let listItem = document.createElement('li');
+				listItem.innerText = newTasks[i]["content"];
+				
+				switch (newTasks[i]["category"]) {
+					case 1:
+						listItem.style.color = "var(--red)";
+						break;
+					case 2:
+						listItem.style.color = "var(--black)";
+						break;
+					case 3:
+						listItem.style.color = "var(--grey)";
+						break;
+					default:
+						alert("This was not supposed to happen. Out of range error.");
+				}
+
+				documentOrderList.appendChild(listItem);
+			}
+		}
+
+		function onBtnToggleClick(){
+			let completedLi = document.querySelectorAll('.completedLi');
+			if (isToggled == false) {
+				completedLi.forEach(li => {
+					li.classList.add("hiddenLi");
+				});
+
+				btnToggle.classList.add("toggledButton");
+				isToggled = true;
+			} else {
+				completedLi.forEach(li => {
+					li.classList.remove("hiddenLi");
+				});
+
+				btnToggle.classList.remove("toggledButton");
+				isToggled = false;
+			}
+		}
+	</script>
+</html>
+
